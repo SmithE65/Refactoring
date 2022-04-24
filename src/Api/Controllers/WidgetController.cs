@@ -84,6 +84,45 @@ public class WidgetController : ControllerBase
         return Ok(dtos);
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, WidgetDto dto)
+    {
+        var widget = await _context.Widgets.FindAsync(id);
+
+        if (widget is null)
+        {
+            return NotFound();
+        }
+
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<Property, PropertyDto>();
+        });
+
+        var mapper = new Mapper(config);
+
+        // update widget props
+        widget.Name = dto.Name;
+        foreach (var p in dto.Properties)
+        {
+            var update = widget.Properties.FirstOrDefault(x => x.Name == p.Name);
+
+            if (update is null)
+            {
+                widget.Properties.Add(mapper.Map<Property>(p));
+            }
+            else
+            {
+                update.Data = p.Data;
+            }
+        }
+
+        widget.Properties = widget.Properties.Where(x => dto.Properties.Any(p => p.Name == x.Name)).ToList();
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
+
     [HttpPost("cleanup")]
     public async Task<IActionResult> CleanupWidgets()
     {
