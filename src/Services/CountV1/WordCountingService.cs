@@ -1,4 +1,6 @@
-﻿namespace Services;
+﻿using Services.CountV2;
+
+namespace Services.CountV1;
 
 public class WordCountingService : IWordCounter<Stream>
 {

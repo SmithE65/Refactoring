@@ -1,4 +1,4 @@
-﻿namespace Services;
+﻿namespace Services.CountV2;
 
 public interface IWordCounter<T>
 {
