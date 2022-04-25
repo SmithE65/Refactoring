@@ -36,7 +36,7 @@ public class WidgetController : ControllerBase
         await _context.SaveChangesAsync();
 
         var result = mapper.Map<WidgetDto>(widget) ?? throw new Exception("Mapping error!");
-        return Created(Url.ActionLink(values: new { id = widget.Id }) ?? throw new Exception("Failed to build resource URI"), new CreateResult<WidgetDto>(widget.Id, result));
+        return Created($"{Url.ActionLink()}/{widget.Id}", widget);
     }
 
     [HttpDelete("id")]

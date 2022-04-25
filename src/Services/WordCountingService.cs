@@ -26,6 +26,7 @@ public class WordCountingService : IWordCounter<Stream>
                 }
 
                 string tag = string.Empty;
+                var isTagClosed = false;
 
                 // get tag
                 while (sr.Peek() >= 0)
@@ -34,6 +35,7 @@ public class WordCountingService : IWordCounter<Stream>
 
                     if (char.IsWhiteSpace(tc) || tc == '!' || tc == '>')
                     {
+                        isTagClosed = tc == '>';
                         break;
                     }
 
@@ -52,7 +54,7 @@ public class WordCountingService : IWordCounter<Stream>
                     }
                 }
 
-                while (sr.Peek() >= 0)
+                while (!isTagClosed && sr.Peek() >= 0)
                 {
                     var tagChar = (char)sr.Read();
 
@@ -93,6 +95,14 @@ public class WordCountingService : IWordCounter<Stream>
             }
 
             currentWord += c;
+        }
+
+        if (!string.IsNullOrWhiteSpace(currentWord))
+        {
+            if (!wordCounts.TryAdd(currentWord, 1))
+            {
+                ++wordCounts[currentWord];
+            }
         }
 
         return wordCounts;
