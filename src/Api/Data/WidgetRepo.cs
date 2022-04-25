@@ -5,9 +5,11 @@ using System.Linq.Expressions;
 
 namespace Api.Data;
 
-public class WidgetRepo : IRepository<Widget>
+internal sealed class WidgetRepo : IRepository<Widget>
 {
     private readonly WidgetContext _context;
+
+    private IQueryable<Widget> Widgets => _context.Widgets.Include(x => x.Properties);
 
     public WidgetRepo(WidgetContext context)
     {
@@ -39,13 +41,13 @@ public class WidgetRepo : IRepository<Widget>
         => await query.ExecuteAsync();
 
     public async Task<Widget[]> GetAllAsync()
-        => await _context.Widgets.ToArrayAsync();
+        => await Widgets.ToArrayAsync();
 
     public async Task<Widget[]> GetManyAsync(Expression<Func<Widget, bool>> query)
-        => await _context.Widgets.Where(query).ToArrayAsync();
+        => await Widgets.Where(query).ToArrayAsync();
 
     public async Task<Widget?> GetOneAsync(int id)
-        => await _context.Widgets.FindAsync(id);
+        => await Widgets.FirstOrDefaultAsync(x => x.Id == id);
 
     public async Task SaveChangesAsync()
         => await _context.SaveChangesAsync();

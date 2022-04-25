@@ -1,7 +1,8 @@
 using Api.Data;
 using Api.Mapping;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+using Core.Data;
+using Core.Models;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<WidgetContext>();
 
 builder.Services.AddScoped<IMapper>(x => new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<WidgetMappingProfile>())));
-builder.Services.AddScoped<IWidgetCleanupService>();
+builder.Services.AddScoped<IWidgetCleanupService, WidgetCleanupService>();
+builder.Services.AddScoped<IRepository<Widget>, WidgetRepo>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
