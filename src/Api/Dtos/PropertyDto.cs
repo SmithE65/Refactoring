@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Refactoring.Dtos;
+namespace Api.Dtos;
 
 public record class PropertyDto([Required] string Name, string Data);

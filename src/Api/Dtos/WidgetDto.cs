@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Refactoring.Dtos;
+namespace Api.Dtos;
 
 public class WidgetDto
 {

@@ -1,7 +1,7 @@
 ﻿using Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Refactoring.Data;
+namespace Api.Data;
 
 #nullable disable
 

@@ -1,23 +1,20 @@
-﻿using AutoMapper;
-using Core.Api;
+﻿using Api.Data;
+using Api.Dtos;
+using AutoMapper;
 using Core.Models;
 using Microsoft.EntityFrameworkCore;
-using Refactoring.Data;
-using Refactoring.Dtos;
 
-namespace Refactoring.Controllers;
+namespace Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 public class WidgetController : ControllerBase
 {
     private readonly WidgetContext _context;
-    private readonly ILogger<WidgetController> _logger;
 
-    public WidgetController(WidgetContext context, ILogger<WidgetController> logger)
+    public WidgetController(WidgetContext context)
     {
         _context = context;
-        _logger = logger;
     }
 
     [HttpPost]
@@ -36,7 +33,7 @@ public class WidgetController : ControllerBase
         await _context.SaveChangesAsync();
 
         var result = mapper.Map<WidgetDto>(widget) ?? throw new Exception("Mapping error!");
-        return Created($"{Url.ActionLink()}/{widget.Id}", widget);
+        return Created($"{Url.ActionLink()}/{widget.Id}", result);
     }
 
     [HttpDelete("id")]

@@ -1,7 +1,7 @@
 ﻿using Services.CountV2;
 using System.Linq;
 
-namespace Services.Tests;
+namespace Services.Tests.V2;
 
 public class SimpleWordSplitterTests
 {
