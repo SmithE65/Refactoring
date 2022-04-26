@@ -24,7 +24,7 @@ public class WidgetRepoController : ControllerBase
     {
         var widget = _mapper.Map<WidgetDto, Widget>(dto);
         await _repo.CreateAsync(widget);
-        var result = _mapper.Map<WidgetDto>(widget) ?? throw new Exception("Mapping error!");
+        var result = _mapper.Map<WidgetDto>(widget);
         return Created($"{Url.ActionLink()}/{widget.Id}", result);
     }
 
