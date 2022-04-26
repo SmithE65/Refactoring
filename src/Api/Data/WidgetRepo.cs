@@ -22,15 +22,15 @@ internal sealed class WidgetRepo : IRepository<Widget>
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(Widget widget)
     {
-        _context.Remove(new Widget() { Id = id });
+        _context.Remove(widget);
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteManyAsync(IEnumerable<int> ids)
+    public async Task DeleteManyAsync(IEnumerable<Widget> widgets)
     {
-        _context.RemoveRange(ids.Select(x => new Widget() { Id = x }));
+        _context.Widgets.RemoveRange(widgets);
         await _context.SaveChangesAsync();
     }
 

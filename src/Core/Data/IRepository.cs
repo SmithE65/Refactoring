@@ -5,8 +5,8 @@ namespace Core.Data;
 public interface IRepository<T> where T : EntityBase
 {
     Task CreateAsync(T data);
-    Task DeleteAsync(int id);
-    Task DeleteManyAsync(IEnumerable<int> ids);
+    Task DeleteAsync(T entity);
+    Task DeleteManyAsync(IEnumerable<T> entities);
     Task<T?> GetOneAsync(int id);
     Task<T[]> GetManyAsync(Expression<Func<T, bool>> query);
     Task<T[]> GetAllAsync();

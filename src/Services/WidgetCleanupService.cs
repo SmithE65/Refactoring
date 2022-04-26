@@ -19,7 +19,7 @@ public class WidgetCleanupService : IWidgetCleanupService
         foreach (var grouping in groups)
         {
             var toRemove = grouping.OrderBy(x => x.Properties.Count).Skip(1);
-            await _repo.DeleteManyAsync(toRemove.Select(x => x.Id));
+            await _repo.DeleteManyAsync(toRemove);
         }
     }
 
@@ -36,6 +36,6 @@ public class WidgetCleanupService : IWidgetCleanupService
     public async Task RemoveNoPropWidgetsAsync()
     {
         var step1 = await _repo.GetManyAsync(x => x.Properties.Count == 0);
-        await _repo.DeleteManyAsync(step1.Select(x => x.Id));
+        await _repo.DeleteManyAsync(step1);
     }
 }

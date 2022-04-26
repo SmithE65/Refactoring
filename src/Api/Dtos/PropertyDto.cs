@@ -2,4 +2,9 @@
 
 namespace Api.Dtos;
 
-public record class PropertyDto([Required] string Name, string Data);
+public class PropertyDto
+{
+    [Required]
+    public string Name { get; set; } = null!;
+    public string? Data { get; set; }
+}
